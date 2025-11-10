@@ -9,20 +9,59 @@
 <body>
   <h2>Cadastro de Usuário</h2>
   <form id="formCadastro" method="POST" action="/cadastrar">
-    <label>Nome:</label>
-    <input type="text" name="nome" required><br><br>
-    
-    <label>CPF:</label>
-    <input type="text" name="cpf" id="cpf" maxlength="14" required><br><br>
-    <span id="cpf-error" style="color: red; display: none;">CPF inválido</span>
-    
-    <label>Email:</label>
-    <input type="email" name="email" required><br><br>
+    <div>
+      <label for="nome">Nome:</label><br>
+      <input type="text" id="nome" name="nome" placeholder="Nome" maxlength="50" pattern="[A-Za-zÀ-ÿ\s]+" required><br>
+      <span id="nome-error" style="color: red; display: none;">Nome inválido. Use apenas letras e espaços. Números não são permitidos.</span><br>
+    </div>
 
-    <label>Data de Nascimento:</label>
-    <input type="date" name="data_Nascimento" required><br><br>
+    <div>
+      <label for="cpf">CPF:</label><br>
+      <input type="text" name="cpf" id="cpf" maxlength="14"  placeholder="000.000.000-00" required><br><br>
+      <span id="cpf-error" style="color: red; display: none;">CPF inválido</span>
+    </div>
+    
+    <div>
+      <label for="email">Email:</label><br>
+      <input type="email" name="email" required><br><br>
+    </div>
 
-    <button>cadastrar</button>
+    <div>
+      <label for="telefone">Telefone:</label><br>
+      <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" maxlength="15" required><br>
+      <span id="telefone-error" style="color: red; display: none;">Telefone inválido. Digite um número válido com DDD.</span><br>
+    </div>
+
+    <div>
+      <label for="data_Nascimento">Data de Nascimento:</label><br>
+      <input type="date" name="data_Nascimento" required><br><br>
+    </div>
+
+    <div>
+      <label for="senha">Crie uma Senha:</label><br>
+      <input type="password" id="senha" name="senha" minlength="8" maxlength="20" required>
+      <span id="senha-error" style="color: red; display: none;">A senha deve ter entre 8 e 20 caracteres, incluir letras maiúsculas, minúsculas, números e caracteres especiais.</span>
+      <div id="senha-forca" style="margin-top: 5px;">
+        <div style="width: 0%; height: 5px; background-color: #ccc; transition: all 0.3s;"></div>
+      </div>
+    </div>
+    <br>
+
+    <div>
+      <label for="confirma_senha">Confirme sua Senha:</label><br>
+      <input type="password" id="confirma_senha" name="confirma_senha" required>
+      <span id="confirma-senha-error" style="color: red; display: none;">As senhas não coincidem.</span>
+    </div>
+    <br>
+
+    <div>
+      <input type="checkbox" id="mostrar-senha">
+      <label for="mostrar-senha">Mostrar Senhas</label>
+    </div>
+    <br>
+
+    <input id="submit" type="submit" value="enviar">
+    
   </form>
 </body>
 </html>

@@ -8,28 +8,182 @@ function mascaraCPF(cpf) {
 }
 
 // Quando o documento estiver carregado
+// Função para aplicar a máscara do telefone
+function mascaraTelefone(telefone) {
+  telefone = telefone.replace(/\D/g, ''); // Remove tudo o que não é dígito
+  if (telefone.length > 11) telefone = telefone.slice(0, 11); // Limita a 11 dígitos
+  if (telefone.length > 2) {
+    telefone = telefone.replace(/^(\d{2})(\d)/g, '($1) $2'); // Coloca parênteses em volta dos dois primeiros dígitos
+  }
+  if (telefone.length > 7) {
+    telefone = telefone.replace(/(\d)(\d{4})$/, '$1-$2'); // Coloca hífen entre o quarto e o quinto dígitos
+  }
+  return telefone;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   const cpfInput = document.getElementById('cpf');
+  const telefoneInput = document.getElementById('telefone');
+  const nomeInput = document.getElementById('nome');
+  const senhaInput = document.getElementById('senha');
+  const confirmaSenhaInput = document.getElementById('confirma_senha');
+  const mostrarSenhaCheckbox = document.getElementById('mostrar-senha');
+  const senhaForca = document.querySelector('#senha-forca div');
+  
   const cpfError = document.getElementById('cpf-error');
+  const telefoneError = document.getElementById('telefone-error');
+  const nomeError = document.getElementById('nome-error');
+  const senhaError = document.getElementById('senha-error');
+  const confirmaSenhaError = document.getElementById('confirma-senha-error');
+  
   const form = document.getElementById('formCadastro');
 
-  // Aplica a máscara quando o usuário digita
+  // Aplica a máscara quando o usuário digita no CPF
   cpfInput.addEventListener('input', function(e) {
     let cpf = e.target.value;
     e.target.value = mascaraCPF(cpf);
   });
 
+  // Aplica a máscara quando o usuário digita no telefone
+  telefoneInput.addEventListener('input', function(e) {
+    let telefone = e.target.value;
+    e.target.value = mascaraTelefone(telefone);
+  });
+
   // Valida o CPF quando o formulário é enviado
+  // Validação do nome
+  nomeInput.addEventListener('input', function(e) {
+    const nome = e.target.value;
+    // Remove números assim que são digitados
+    if (/\d/.test(nome)) {
+      e.target.value = nome.replace(/\d/g, '');
+    }
+    // Valida o formato do nome
+    if (!/^[A-Za-zÀ-ÿ\s]+$/.test(nome) && nome !== '') {
+      nomeError.style.display = 'block';
+    } else {
+      nomeError.style.display = 'none';
+    }
+  });
+
+  // Validação da força da senha
+  senhaInput.addEventListener('input', function(e) {
+    const senha = e.target.value;
+    const forca = verificarForcaSenha(senha);
+    
+    // Atualiza a barra de força
+    senhaForca.style.width = forca.porcentagem + '%';
+    senhaForca.style.backgroundColor = forca.cor;
+    
+    // Mostra/esconde mensagem de erro
+    if (senha.length > 0 && !forca.valida) {
+      senhaError.style.display = 'block';
+    } else {
+      senhaError.style.display = 'none';
+    }
+  });
+
+  // Validação de confirmação de senha
+  confirmaSenhaInput.addEventListener('input', function(e) {
+    if (senhaInput.value !== e.target.value) {
+      confirmaSenhaError.style.display = 'block';
+    } else {
+      confirmaSenhaError.style.display = 'none';
+    }
+  });
+
+  // Mostrar/ocultar senhas
+  mostrarSenhaCheckbox.addEventListener('change', function() {
+    const tipo = this.checked ? 'text' : 'password';
+    senhaInput.type = tipo;
+    confirmaSenhaInput.type = tipo;
+  });
+
   form.addEventListener('submit', function(e) {
     const cpf = cpfInput.value.replace(/[^\d]+/g, '');
+    const telefone = telefoneInput.value.replace(/[^\d]+/g, '');
+    const nome = nomeInput.value;
+    const senha = senhaInput.value;
+    const confirmaSenha = confirmaSenhaInput.value;
+
+    let isValid = true;
+
+    // Valida CPF
     if (!validarCPF(cpf)) {
-      e.preventDefault();
       cpfError.style.display = 'block';
+      isValid = false;
     } else {
       cpfError.style.display = 'none';
     }
+
+    // Valida telefone
+    if (telefone.length < 10 || telefone.length > 11) {
+      telefoneError.style.display = 'block';
+      isValid = false;
+    } else {
+      telefoneError.style.display = 'none';
+    }
+
+    // Valida nome
+    if (!/^[A-Za-zÀ-ÿ\s]+$/.test(nome)) {
+      nomeError.style.display = 'block';
+      isValid = false;
+    } else {
+      nomeError.style.display = 'none';
+    }
+
+    // Valida senha
+    const forcaSenha = verificarForcaSenha(senha);
+    if (!forcaSenha.valida) {
+      senhaError.style.display = 'block';
+      isValid = false;
+    } else {
+      senhaError.style.display = 'none';
+    }
+
+    // Valida confirmação de senha
+    if (senha !== confirmaSenha) {
+      confirmaSenhaError.style.display = 'block';
+      isValid = false;
+    } else {
+      confirmaSenhaError.style.display = 'none';
+    }
+
+    if (!isValid) {
+      e.preventDefault();
+    }
   });
 });
+
+function verificarForcaSenha(senha) {
+  let pontos = 0;
+  const regexes = {
+    maiusculas: /[A-Z]/,
+    minusculas: /[a-z]/,
+    numeros: /[0-9]/,
+    especiais: /[!@#$%^&*(),.?":{}|<>]/
+  };
+
+  // Verifica comprimento
+  if (senha.length >= 8) pontos += 25;
+  
+  // Verifica caracteres especiais
+  for (let tipo in regexes) {
+    if (regexes[tipo].test(senha)) pontos += 25;
+  }
+
+  // Define a cor com base na pontuação
+  let cor = '#ff4444'; // vermelho
+  if (pontos >= 100) cor = '#44ff44'; // verde
+  else if (pontos >= 75) cor = '#ffff44'; // amarelo
+  else if (pontos >= 50) cor = '#ffa500'; // laranja
+
+  return {
+    valida: pontos >= 100,
+    porcentagem: Math.min(100, pontos),
+    cor: cor
+  };
+}
 
 function validarCPF(cpf) {
   cpf = cpf.replace(/[^\d]+/g, ''); // remove pontos e traços

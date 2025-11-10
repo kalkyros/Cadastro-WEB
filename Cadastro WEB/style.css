@@ -1,6 +1,6 @@
 body {
   font-family: Arial;
-  background: #344a72;
+  background: rgb(52, 74, 114);
   text-align: center;
   padding: 60px;
 }
@@ -9,8 +9,11 @@ form {
   background: rgb(91, 136, 187);
   padding: 50px;
   border-radius: 60px;
-  display: inline-block;
+  display: flex;
   box-shadow: 0 0 20px #000000;
+  flex-direction: column;
+  width: 280px;
+  justify-self: center;
 }
 
 h2 {
@@ -34,18 +37,7 @@ h2 {
   width: 250px; 
 }
 
-button {
-  background-color: #225faf;
-  color: white;
-  border: none;
-  padding: 5px;
-  border-radius: 10px;
-  cursor: pointer;
-}
 
-button:hover {
-  background-color: #1b4f8a;
-}
 
 input {
   padding: 8px;
@@ -65,4 +57,20 @@ label:hover {
 }
 label:focus {
   color: #ffffff;
+}
+
+#submit {
+  width: 80px;
+  margin: auto;
+  margin-top: 20px;
+  background-color: #225faf;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#submit:hover {
+  background-color: #1b4f8a;
 }
