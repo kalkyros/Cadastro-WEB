@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Usuário</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <h2>Cadastro de Usuário</h2>
+  <form id="formCadastro" method="POST" action="/cadastrar">
+    <label>Nome:</label>
+    <input type="text" name="nome" required><br><br>
+    
+    <label>CPF:</label>
+    <input type="text" name="cpf" id="cpf" maxlength="14" required><br><br>
+    <span id="cpf-error" style="color: red; display: none;">CPF inválido</span>
+    
+    <label>Email:</label>
+    <input type="email" name="email" required><br><br>
+
+    <label>Data de Nascimento:</label>
+    <input type="date" name="data_Nascimento" required><br><br>
+
+    <button>cadastrar</button>
+  </form>
+</body>
+</html>
