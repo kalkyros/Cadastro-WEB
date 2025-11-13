@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+  <h2>Login</h2>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul>
+      {% for category, message in messages %}
+        <li style="color: {% if category == 'danger' %}red{% elif category == 'success' %}green{% else %}black{% endif %};">{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST" action="{{ url_for('login') }}">
+    <div>
+      <label for="email">Email:</label><br>
+      <input type="email" name="email" required><br><br>
+    </div>
+    <div>
+      <label for="senha">Senha:</label><br>
+      <input type="password" name="senha" required><br><br>
+    </div>
+    <input id="submit" type="submit" value="Entrar">
+  </form>
+
+  <p>Ainda não tem conta? <a href="{{ url_for('homePage') }}">Registre-se</a></p>
+</body>
+</html>

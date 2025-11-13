@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h2>Bem-vindo, {{ nome }}!</h2>
+  <p>Você está logado.</p>
+  <p><a href="{{ url_for('logout') }}">Sair</a></p>
+</body>
+</html>

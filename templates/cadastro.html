@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Cadastro de Usuário</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 <body>
   <h2>Cadastro de Usuário</h2>
-  <form id="formCadastro" method="POST" action="/cadastrar">
+  <form id="formCadastro" method="POST" action="{{ url_for('cadastrar') }}">
     <div>
       <label for="nome">Nome:</label><br>
       <input type="text" id="nome" name="nome" placeholder="Nome" maxlength="50" pattern="[A-Za-zÀ-ÿ\s]+" required><br>
@@ -41,8 +41,8 @@
       <label for="senha">Crie uma Senha:</label><br>
       <input type="password" id="senha" name="senha" minlength="8" maxlength="20" required>
       <span id="senha-error" style="color: red; display: none;">A senha deve ter entre 8 e 20 caracteres, incluir letras maiúsculas, minúsculas, números e caracteres especiais.</span>
-      <div id="senha-forca" style="margin-top: 5px;">
-        <div style="width: 0%; height: 5px; background-color: #ccc; transition: all 0.3s;"></div>
+      <div id="senha-forca" style="margin-top: 5px; width: 250px; background:#eee; border-radius:3px;">
+        <div style="width: 0%; height: 8px; background-color: #ccc; transition: all 0.3s;"></div>
       </div>
     </div>
     <br>
@@ -63,5 +63,6 @@
     <input id="submit" type="submit" value="enviar">
     
   </form>
+  <p>Já tem conta? <a href="{{ url_for('login') }}">Entrar</a></p>
 </body>
 </html>
