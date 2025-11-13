@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+  <script src="{{url_for('static', filename='script2.js')}}" defer></script>
   <style>
     .message-danger { color: red; }
     .message-success { color: green; }
     .message-default { color: black; }
   </style>
 </head>
-  <form method="POST" action="{{ url_for('login') }}">
+  <form method="POST" action="{{url_for('login')}}">
     <div>
       <label for="email">Email:</label><br>
       <input type="email" name="email" required><br><br>
@@ -23,6 +23,6 @@
     <input id="submit" type="submit" value="Entrar">
   </form>
 
-  <p>Ainda não tem conta? <a href="{{ url_for('homePage') }}">Registre-se</a></p>
+  <p>Ainda não tem conta? <a href="{{url_for('homePage')}}">Registre-se</a></p>
 </body>
 </html>
