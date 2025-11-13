@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Confirmação</title>
-  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <h2>Cadastro realizado</h2>
   <p>Obrigado pelo cadastro, {{ nome }}!</p>
-  <a href="/login">Ir para login</a>
-    <a href="/">Voltar para o formulário</a>
+  <p><a href="{{ url_for('login') }}">Ir para login</a></p>
+  <p><a href="{{ url_for('homePage') }}">Voltar para o formulário</a></p>
 </body>
 </html>
