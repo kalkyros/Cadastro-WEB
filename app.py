@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static')
 
 # Configurações com valores padrão (seguros o suficiente para desenvolvimento)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY") or os.urandom(24)
