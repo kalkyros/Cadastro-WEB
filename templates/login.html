@@ -5,19 +5,12 @@
   <title>Login</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+  <style>
+    .message-danger { color: red; }
+    .message-success { color: green; }
+    .message-default { color: black; }
+  </style>
 </head>
-<body>
-  <h2>Login</h2>
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <ul>
-      {% for category, message in messages %}
-        <li style="color: {% if category == 'danger' %}red{% elif category == 'success' %}green{% else %}black{% endif %};">{{ message }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-
   <form method="POST" action="{{ url_for('login') }}">
     <div>
       <label for="email">Email:</label><br>
